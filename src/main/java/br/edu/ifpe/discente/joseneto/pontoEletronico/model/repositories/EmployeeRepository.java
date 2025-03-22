@@ -174,69 +174,69 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         return emp;
     }
 
-    public static void main(String[] args) {
+    // public static void main(String[] args) {
 
-        Employee e1 = new Employee();
-        e1.setId(1);
-        e1.setName("Ana Souza");
-        e1.setPosition("Analista de TI");
-        e1.setDepartment("Tecnologia");
-        e1.setEmail("ana.souza@email.com");
-        e1.setPassword("123456");
+    // Employee e1 = new Employee();
+    // e1.setId(1);
+    // e1.setName("Ana Souza");
+    // e1.setPosition("Analista de TI");
+    // e1.setDepartment("Tecnologia");
+    // e1.setEmail("ana.souza@email.com");
+    // e1.setPassword("123456");
 
-        Employee e2 = new Employee();
-        e2.setId(2);
-        e2.setName("Carlos Lima");
-        e2.setPosition("Gerente de RH");
-        e2.setDepartment("Recursos Humanos");
-        e2.setEmail("carlos.lima@email.com");
-        e2.setPassword("123456");
+    // Employee e2 = new Employee();
+    // e2.setId(2);
+    // e2.setName("Carlos Lima");
+    // e2.setPosition("Gerente de RH");
+    // e2.setDepartment("Recursos Humanos");
+    // e2.setEmail("carlos.lima@email.com");
+    // e2.setPassword("123456");
 
-        Employee e3 = new Employee();
-        e3.setId(3);
-        e3.setName("Fernanda Oliveira");
-        e3.setPosition("Desenvolvedora");
-        e3.setDepartment("Tecnologia");
-        e3.setEmail("fernanda.oliveira@email.com");
-        e3.setPassword("123456");
+    // Employee e3 = new Employee();
+    // e3.setId(3);
+    // e3.setName("Fernanda Oliveira");
+    // e3.setPosition("Desenvolvedora");
+    // e3.setDepartment("Tecnologia");
+    // e3.setEmail("fernanda.oliveira@email.com");
+    // e3.setPassword("123456");
 
-        Employee e4 = new Employee();
-        e4.setId(4);
-        e4.setName("José Santos");
-        e4.setPosition("Contador");
-        e4.setDepartment("Financeiro");
-        e4.setEmail("jose.santos@email.com");
-        e4.setPassword("123456");
+    // Employee e4 = new Employee();
+    // e4.setId(4);
+    // e4.setName("José Santos");
+    // e4.setPosition("Contador");
+    // e4.setDepartment("Financeiro");
+    // e4.setEmail("jose.santos@email.com");
+    // e4.setPassword("123456");
 
-        Employee e5 = new Employee();
-        e5.setId(5);
-        e5.setName("Mariana Ribeiro");
-        e5.setPosition("Secretária");
-        e5.setDepartment("Administração");
-        e5.setEmail("mariana.ribeiro@email.com");
-        e5.setPassword("123456");
+    // Employee e5 = new Employee();
+    // e5.setId(5);
+    // e5.setName("Mariana Ribeiro");
+    // e5.setPosition("Secretária");
+    // e5.setDepartment("Administração");
+    // e5.setEmail("mariana.ribeiro@email.com");
+    // e5.setPassword("123456");
 
-        EmployeeRepository e = new EmployeeRepository();
+    // EmployeeRepository e = new EmployeeRepository();
 
-        try {
-            // e.update(e1);
-            // e.update(e2);
-            // e.update(e3);
-            // e.update(e4);
-            // e.update(e5);
-            // List<Employee> emps = e.findAll();
+    // try {
+    // // e.update(e1);
+    // // e.update(e2);
+    // // e.update(e3);
+    // // e.update(e4);
+    // // e.update(e5);
+    // // List<Employee> emps = e.findAll();
 
-            // for (Employee emp : emps) {
-            // System.out.println(emp);
-            // }
+    // // for (Employee emp : emps) {
+    // // System.out.println(emp);
+    // // }
 
-            e.delete(2);
+    // e.delete(2);
 
-            System.out.println("Funcionou");
-        } catch (SQLException e6) {
-            System.out.println("Não Funcionou");
-            e6.printStackTrace();
-        }
-    }
+    // System.out.println("Funcionou");
+    // } catch (SQLException e6) {
+    // System.out.println("Não Funcionou");
+    // e6.printStackTrace();
+    // }
+    // }
 
 }

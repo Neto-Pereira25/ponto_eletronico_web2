@@ -32,4 +32,9 @@ public class TimeRegister {
         this.dateTime = dateTime;
     }
 
+    @Override
+    public String toString() {
+        return "TimeRegister [id=" + id + ", employeeId=" + employeeId + ", dateTime=" + dateTime + "]";
+    }
+
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.Employee;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.TimeRegister;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories.TimeRegisterRepository;
 
@@ -88,4 +87,19 @@ public class TimeRegisterController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id) {
+        try {
+            if (trr.find(id) == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            trr.delete(id);
+
+            return ResponseEntity.noContent().build();
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Falha ao deletar registro do ponto");
+        }
+    }
 }

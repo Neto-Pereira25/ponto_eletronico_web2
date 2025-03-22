@@ -1,6 +1,7 @@
 package br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -78,8 +79,28 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
 
     @Override
     public Employee find(Integer key) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'find'");
+        String query = """
+                SELECT *
+                FROM funcionario
+                WHERE id = ?
+                """;
+
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            pstm.setInt(1, key);
+
+            rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                return instantiatedUser(rs);
+            }
+
+            return null;
+        } catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        }
     }
 
     @Override
@@ -92,6 +113,21 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     public Employee delete(Integer key) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    private Employee instantiatedUser(ResultSet rs) {
+        Employee emp = new Employee();
+        try {
+            emp.setId(rs.getInt("id"));
+            emp.setName(rs.getString("nome"));
+            emp.setPosition(rs.getString("cargo"));
+            emp.setDepartment(rs.getString("departamento"));
+            emp.setEmail(rs.getString("email"));
+            emp.setPassword(rs.getString("senha"));
+        } catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        }
+        return emp;
     }
 
     public static void main(String[] args) {
@@ -139,11 +175,15 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         EmployeeRepository e = new EmployeeRepository();
 
         try {
-            e.update(e1);
-            e.update(e2);
-            e.update(e3);
-            e.update(e4);
-            e.update(e5);
+            // e.update(e1);
+            // e.update(e2);
+            // e.update(e3);
+            // e.update(e4);
+            // e.update(e5);
+            Employee emp = e.find(2);
+
+            System.out.println(emp);
+
             System.out.println("Funcionou");
         } catch (SQLException e6) {
             System.out.println("Não Funcionou");

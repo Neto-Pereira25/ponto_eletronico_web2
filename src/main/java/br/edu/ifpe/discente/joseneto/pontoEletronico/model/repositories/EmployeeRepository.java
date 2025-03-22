@@ -3,6 +3,7 @@ package br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.db.DBException;
@@ -100,13 +101,39 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
             return null;
         } catch (SQLException e) {
             throw new DBException(e.getMessage());
+        } finally {
+            Database.closeResultSet(rs);
+            Database.closeStatement(pstm);
         }
     }
 
     @Override
     public List<Employee> findAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        String query = """
+                SELECT * FROM funcionario
+                """;
+
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            rs = pstm.executeQuery();
+
+            List<Employee> employees = new ArrayList<>();
+
+            while (rs.next()) {
+                Employee emp = instantiatedUser(rs);
+                employees.add(emp);
+            }
+
+            return employees;
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeResultSet(rs);
+            Database.closeStatement(pstm);
+        }
     }
 
     @Override
@@ -180,9 +207,11 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
             // e.update(e3);
             // e.update(e4);
             // e.update(e5);
-            Employee emp = e.find(2);
+            List<Employee> emps = e.findAll();
 
-            System.out.println(emp);
+            for (Employee emp : emps) {
+                System.out.println(emp);
+            }
 
             System.out.println("Funcionou");
         } catch (SQLException e6) {

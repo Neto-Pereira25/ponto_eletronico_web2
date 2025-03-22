@@ -2,9 +2,12 @@ package br.edu.ifpe.discente.joseneto.pontoEletronico.controllers.timeRegister;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.Employee;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.TimeRegister;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories.TimeRegisterRepository;
 
@@ -56,12 +60,19 @@ public class TimeRegisterController {
         }
     }
 
-    // public ResponseEntity<TimeRegister> find() {
-    // }
+    @GetMapping("/{id}")
+    public ResponseEntity<TimeRegister> find(@PathVariable int id) {
+        try {
+            TimeRegister tr = trr.find(id);
 
-    // public ResponseEntity<List<TimeRegister>> findAll() {
-    // }
+            if (tr == null) {
+                return ResponseEntity.notFound().build();
+            }
 
-    // public ResponseEntity<Void> delete() {
-    // }
+            return ResponseEntity.ok().body(tr);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Falha ao encontrar registro do ponto");
+        }
+    }
+
 }

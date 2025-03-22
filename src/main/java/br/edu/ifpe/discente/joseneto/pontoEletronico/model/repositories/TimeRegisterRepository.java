@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +12,9 @@ import br.edu.ifpe.discente.joseneto.pontoEletronico.model.db.Database;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.TimeRegister;
 
 public class TimeRegisterRepository implements GenericRepository<TimeRegister, Integer> {
+
+    public TimeRegisterRepository() {
+    }
 
     @Override
     public TimeRegister create(TimeRegister t) throws SQLException {
@@ -163,31 +165,31 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
         return tr;
     }
 
-    public static void main(String[] args) {
-        TimeRegisterRepository trr = new TimeRegisterRepository();
+    // public static void main(String[] args) {
+    // TimeRegisterRepository trr = new TimeRegisterRepository();
 
-        TimeRegister tr = new TimeRegister();
+    // TimeRegister tr = new TimeRegister();
 
-        // tr.setId(1);
-        tr.setEmployeeId(4);
-        tr.setDateTime(LocalDateTime.now());
+    // // tr.setId(1);
+    // tr.setEmployeeId(4);
+    // tr.setDateTime(LocalDateTime.now());
 
-        try {
-            trr.delete(1);
+    // try {
+    // trr.delete(1);
 
-            // tr = trr.find(1);
+    // // tr = trr.find(1);
 
-            // System.out.println(tr);
+    // // System.out.println(tr);
 
-            // for (TimeRegister timeRegister : trr.findAll()) {
-            // System.out.println(timeRegister);
-            // }
+    // // for (TimeRegister timeRegister : trr.findAll()) {
+    // // System.out.println(timeRegister);
+    // // }
 
-            System.out.println("Funcionou");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    // System.out.println("Funcionou");
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // }
 
-    }
+    // }
 
 }

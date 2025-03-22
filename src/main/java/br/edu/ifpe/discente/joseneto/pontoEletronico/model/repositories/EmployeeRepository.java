@@ -12,7 +12,7 @@ import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.Employee;
 
 public class EmployeeRepository implements GenericRepository<Employee, Integer> {
 
-    protected EmployeeRepository() {
+    public EmployeeRepository() {
     }
 
     @Override

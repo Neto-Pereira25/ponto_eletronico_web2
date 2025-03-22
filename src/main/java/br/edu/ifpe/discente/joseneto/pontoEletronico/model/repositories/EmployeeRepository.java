@@ -132,7 +132,36 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
             }
 
             return employees;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeResultSet(rs);
+            Database.closeStatement(pstm);
+        }
+    }
+
+    public Employee findByEmail(String email) throws SQLException {
+        String query = """
+                SELECT *
+                FROM funcionario
+                WHERE email LIKE ?
+                """;
+
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            pstm.setString(1, email);
+
+            rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                return instantiatedUser(rs);
+            }
+
+            return null;
+        } catch (SQLException e) {
             throw new DBException(e.getMessage());
         } finally {
             Database.closeResultSet(rs);

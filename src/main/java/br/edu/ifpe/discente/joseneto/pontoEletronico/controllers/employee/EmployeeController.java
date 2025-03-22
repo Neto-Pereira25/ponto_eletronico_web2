@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities.Employee;
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories.EmployeeRepository;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500", methods = { RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.OPTIONS })
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -94,6 +98,26 @@ public class EmployeeController {
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "Falha ao deletar funcionários");
+        }
+    }
+
+    @PostMapping("/registeruser")
+    public ResponseEntity<Employee> registerUser(@RequestBody Employee emp) {
+        try {
+            emp.setPosition("Porteiro");
+            emp.setDepartment("Portaria");
+            emp = employeeRepository.create(emp);
+
+            URI uri = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(emp.getId())
+                    .toUri();
+
+            return ResponseEntity.created(uri).body(emp);
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Falha ao registrar usuário");
         }
     }
 }

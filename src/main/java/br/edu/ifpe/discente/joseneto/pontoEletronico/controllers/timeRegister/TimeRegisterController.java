@@ -75,4 +75,17 @@ public class TimeRegisterController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<List<TimeRegister>> findAll() {
+        try {
+
+            List<TimeRegister> timeRegisters = trr.findAll();
+
+            return ResponseEntity.ok().body(timeRegisters);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Falha ao encontrar todos os registro do ponto");
+        }
+    }
+
 }

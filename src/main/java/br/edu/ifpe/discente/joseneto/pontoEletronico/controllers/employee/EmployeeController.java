@@ -2,6 +2,7 @@ package br.edu.ifpe.discente.joseneto.pontoEletronico.controllers.employee;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,8 +72,18 @@ public class EmployeeController {
         }
     }
 
-    // public ResponseEntity<Employee> findAll() {
-    // }
+    @GetMapping
+    public ResponseEntity<List<Employee>> findAll() {
+        try {
+            List<Employee> employees = employeeRepository.findAll();
+
+            return ResponseEntity.ok().body(employees);
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Falha ao encontrar todos os funcionários");
+        }
+
+    }
 
     // public ResponseEntity<Employee> Delete() {
     // }

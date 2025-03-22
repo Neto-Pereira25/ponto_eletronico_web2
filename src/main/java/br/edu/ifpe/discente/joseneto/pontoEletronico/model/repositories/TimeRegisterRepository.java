@@ -36,13 +36,40 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
             return t;
         } catch (SQLException e) {
             throw new DBException(e.getMessage());
+        } finally {
+            Database.closeStatement(pstm);
         }
     }
 
     @Override
     public TimeRegister update(TimeRegister t) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        String query = """
+                UPDATE registroponto
+                SET
+                    funcionario_id = ?,
+                    data_hora = ?
+                WHERE
+                    id = ?
+                """;
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+
+            pstm.setInt(1, t.getEmployeeId());
+
+            Timestamp timestamp = Timestamp.valueOf(t.getDateTime());
+
+            pstm.setTimestamp(2, timestamp);
+            pstm.setInt(3, t.getId());
+            pstm.execute();
+
+            return t;
+        } catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeStatement(pstm);
+        }
     }
 
     @Override
@@ -68,11 +95,12 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
 
         TimeRegister tr = new TimeRegister();
 
-        tr.setEmployeeId(4);
+        tr.setId(1);
+        tr.setEmployeeId(1);
         tr.setDateTime(LocalDateTime.now());
 
         try {
-            trr.create(tr);
+            trr.update(tr);
             System.out.println("Funcionou");
         } catch (SQLException e) {
             e.printStackTrace();

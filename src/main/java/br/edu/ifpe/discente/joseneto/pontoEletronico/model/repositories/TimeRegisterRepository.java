@@ -132,8 +132,22 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
 
     @Override
     public void delete(Integer key) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        String query = """
+                DELETE FROM registroponto
+                WHERE id = ?
+                """;
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            pstm.setInt(1, key);
+            pstm.execute();
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeStatement(pstm);
+        }
     }
 
     private TimeRegister instantiatedTimeRegister(ResultSet rs) {
@@ -159,15 +173,15 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
         tr.setDateTime(LocalDateTime.now());
 
         try {
-            // trr.create(tr);
+            trr.delete(1);
 
             // tr = trr.find(1);
 
             // System.out.println(tr);
 
-            for (TimeRegister timeRegister : trr.findAll()) {
-                System.out.println(timeRegister);
-            }
+            // for (TimeRegister timeRegister : trr.findAll()) {
+            // System.out.println(timeRegister);
+            // }
 
             System.out.println("Funcionou");
         } catch (SQLException e) {

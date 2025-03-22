@@ -2,18 +2,18 @@ package br.edu.ifpe.discente.joseneto.pontoEletronico.model.entities;
 
 public class Employee {
 
-    private Integer id; // identificador
+    private int id; // identificador
     private String name; // nome
     private String position; // cargo
     private String department; // departamento
     private String email;
     private String password; // senha
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,6 +55,12 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee [id=" + id + ", name=" + name + ", position=" + position + ", department=" + department
+                + ", email=" + email + ", password=" + password + "]";
     }
 
 }

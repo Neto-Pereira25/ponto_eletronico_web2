@@ -41,9 +41,39 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     }
 
     @Override
-    public Employee update(Employee t) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public Employee update(Employee emp) throws SQLException {
+        String query = """
+                UPDATE funcionario
+                SET
+                    nome = ?,
+                    cargo = ?,
+                    departamento = ?,
+                    email = ?,
+                    senha = ?
+                WHERE
+                    id = ?
+                """;
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+
+            pstm.setString(1, emp.getName());
+            pstm.setString(2, emp.getPosition());
+            pstm.setString(3, emp.getDepartment());
+            pstm.setString(4, emp.getEmail());
+            pstm.setString(5, emp.getPassword());
+            pstm.setInt(6, emp.getId());
+
+            pstm.executeUpdate();
+
+            System.out.println("\n" + emp + "\n");
+
+            return emp;
+        } catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        }
     }
 
     @Override
@@ -67,6 +97,7 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     public static void main(String[] args) {
 
         Employee e1 = new Employee();
+        e1.setId(1);
         e1.setName("Ana Souza");
         e1.setPosition("Analista de TI");
         e1.setDepartment("Tecnologia");
@@ -74,6 +105,7 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         e1.setPassword("123456");
 
         Employee e2 = new Employee();
+        e2.setId(2);
         e2.setName("Carlos Lima");
         e2.setPosition("Gerente de RH");
         e2.setDepartment("Recursos Humanos");
@@ -81,6 +113,7 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         e2.setPassword("123456");
 
         Employee e3 = new Employee();
+        e3.setId(3);
         e3.setName("Fernanda Oliveira");
         e3.setPosition("Desenvolvedora");
         e3.setDepartment("Tecnologia");
@@ -88,6 +121,7 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         e3.setPassword("123456");
 
         Employee e4 = new Employee();
+        e4.setId(4);
         e4.setName("José Santos");
         e4.setPosition("Contador");
         e4.setDepartment("Financeiro");
@@ -95,6 +129,7 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         e4.setPassword("123456");
 
         Employee e5 = new Employee();
+        e5.setId(5);
         e5.setName("Mariana Ribeiro");
         e5.setPosition("Secretária");
         e5.setDepartment("Administração");
@@ -104,11 +139,11 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
         EmployeeRepository e = new EmployeeRepository();
 
         try {
-            e.create(e1);
-            e.create(e2);
-            e.create(e3);
-            e.create(e4);
-            e.create(e5);
+            e.update(e1);
+            e.update(e2);
+            e.update(e3);
+            e.update(e4);
+            e.update(e5);
             System.out.println("Funcionou");
         } catch (SQLException e6) {
             System.out.println("Não Funcionou");

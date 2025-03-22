@@ -4,23 +4,23 @@ import java.time.LocalDateTime;
 
 public class TimeRegister {
 
-    private Integer id;
-    private Integer employeeId;
+    private int id;
+    private int employeeId;
     private LocalDateTime dateTime;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Integer employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 

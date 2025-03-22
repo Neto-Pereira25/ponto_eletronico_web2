@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpe.discente.joseneto.pontoEletronico.model.db.DBException;
@@ -103,8 +104,30 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
 
     @Override
     public List<TimeRegister> findAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        String query = """
+                SELECT *
+                FROM registroponto
+                """;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            rs = pstm.executeQuery();
+
+            List<TimeRegister> trs = new ArrayList<>();
+
+            while (rs.next()) {
+                TimeRegister tr = instantiatedTimeRegister(rs);
+                trs.add(tr);
+            }
+            return trs;
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeResultSet(rs);
+            Database.closeStatement(pstm);
+        }
     }
 
     @Override
@@ -132,15 +155,19 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
         TimeRegister tr = new TimeRegister();
 
         // tr.setId(1);
-        // tr.setEmployeeId(1);
-        // tr.setDateTime(LocalDateTime.now());
+        tr.setEmployeeId(4);
+        tr.setDateTime(LocalDateTime.now());
 
         try {
-            // trr.update(tr);
+            // trr.create(tr);
 
-            tr = trr.find(1);
+            // tr = trr.find(1);
 
-            System.out.println(tr);
+            // System.out.println(tr);
+
+            for (TimeRegister timeRegister : trr.findAll()) {
+                System.out.println(timeRegister);
+            }
 
             System.out.println("Funcionou");
         } catch (SQLException e) {

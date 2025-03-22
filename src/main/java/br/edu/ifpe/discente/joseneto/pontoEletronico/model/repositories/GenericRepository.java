@@ -13,5 +13,5 @@ public interface GenericRepository<T, I> {
 
     public List<T> findAll() throws SQLException;
 
-    public T delete(I key) throws SQLException;
+    public void delete(I key) throws SQLException;
 }

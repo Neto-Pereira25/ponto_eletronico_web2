@@ -39,6 +39,8 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
             return emp;
         } catch (SQLException e) {
             throw new DBException(e.getMessage());
+        } finally {
+            Database.closeStatement(pstm);
         }
     }
 
@@ -75,6 +77,8 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
             return emp;
         } catch (SQLException e) {
             throw new DBException(e.getMessage());
+        } finally {
+            Database.closeStatement(pstm);
         }
     }
 
@@ -137,9 +141,22 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     }
 
     @Override
-    public Employee delete(Integer key) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public void delete(Integer key) throws SQLException {
+        String query = """
+                DELETE FROM funcionario
+                WHERE id = ?
+                """;
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            pstm.setInt(1, key);
+            pstm.execute();
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeStatement(pstm);
+        }
     }
 
     private Employee instantiatedUser(ResultSet rs) {
@@ -207,11 +224,13 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
             // e.update(e3);
             // e.update(e4);
             // e.update(e5);
-            List<Employee> emps = e.findAll();
+            // List<Employee> emps = e.findAll();
 
-            for (Employee emp : emps) {
-                System.out.println(emp);
-            }
+            // for (Employee emp : emps) {
+            // System.out.println(emp);
+            // }
+
+            e.delete(2);
 
             System.out.println("Funcionou");
         } catch (SQLException e6) {

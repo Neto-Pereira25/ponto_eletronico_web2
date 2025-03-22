@@ -5,7 +5,9 @@ import java.sql.SQLException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +40,20 @@ public class EmployeeController {
         return ResponseEntity.created(uri).body(emp);
     }
 
-    // public ResponseEntity<Employee> update() {
-    // }
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> update(@PathVariable int id, @RequestBody Employee emp) {
+        try {
+            if (employeeRepository.find(id) == null) {
+                return ResponseEntity.notFound().build();
+            }
+            emp.setId(id);
+            employeeRepository.update(emp);
+
+            return ResponseEntity.ok().body(emp);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Falha ao atualizar funcionário");
+        }
+    }
 
     // public ResponseEntity<Employee> findById() {
     // }

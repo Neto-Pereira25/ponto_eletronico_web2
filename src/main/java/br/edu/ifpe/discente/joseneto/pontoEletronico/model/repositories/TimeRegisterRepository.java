@@ -1,6 +1,7 @@
 package br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -74,8 +75,30 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
 
     @Override
     public TimeRegister find(Integer key) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'find'");
+        String query = """
+                SELECT *
+                FROM registroponto
+                WHERE id = ?
+                """;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            pstm = Database.getConnection().prepareStatement(query);
+            pstm.setInt(1, key);
+
+            rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                return instantiatedTimeRegister(rs);
+            }
+            return null;
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            Database.closeResultSet(rs);
+            Database.closeStatement(pstm);
+        }
     }
 
     @Override
@@ -90,17 +113,35 @@ public class TimeRegisterRepository implements GenericRepository<TimeRegister, I
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
+    private TimeRegister instantiatedTimeRegister(ResultSet rs) {
+        TimeRegister tr = new TimeRegister();
+        try {
+            tr.setId(rs.getInt("id"));
+            tr.setEmployeeId(rs.getInt("funcionario_id"));
+            tr.setDateTime(rs.getTimestamp("data_hora").toLocalDateTime());
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        }
+
+        return tr;
+    }
+
     public static void main(String[] args) {
         TimeRegisterRepository trr = new TimeRegisterRepository();
 
         TimeRegister tr = new TimeRegister();
 
-        tr.setId(1);
-        tr.setEmployeeId(1);
-        tr.setDateTime(LocalDateTime.now());
+        // tr.setId(1);
+        // tr.setEmployeeId(1);
+        // tr.setDateTime(LocalDateTime.now());
 
         try {
-            trr.update(tr);
+            // trr.update(tr);
+
+            tr = trr.find(1);
+
+            System.out.println(tr);
+
             System.out.println("Funcionou");
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,5 +1,5 @@
 const contentLogout = `
-<div class="w-75 mx-auto my-2 bg-light p-3 rounded">
+    <div class="w-75 mx-auto my-2 bg-light p-3 rounded">
         <!-- Pills navs -->
         <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
             <li class="nav-item" role="presentation">

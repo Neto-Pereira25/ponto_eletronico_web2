@@ -33,4 +33,21 @@ document.getElementById('login').addEventListener('submit', function (event) {
             sessionStorage.setItem('msg', JSON.stringify(error.message));
         });
 
+    fetch('http://localhost:8080/employee', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            sessionStorage.setItem('employeeList', JSON.stringify(data));
+        })
+        .catch();
+
 });

@@ -1,15 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dados do Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body class="d-flex flex-column">
+    <!-- navbar -->
+    <div class="navBar"></div>
     <!-- Perfil do Porteiro -->
-    <h1>Perfil do Usuário</h1>
+    <div class="h-75">
+        <div class="w-75 mx-auto my-2 bg-light p-3 rounded">
+            <h2 class="text-center text-primary mb-4">Informações do Porteiro</h2>
+            <div class="row">
+                <!-- Coluna para Nome -->
+                <div class="col-md-6 mb-3">
+                    <h4 class="fw-bold">Nome:</h4>
+                    <p class="fs-5" id="name"></p>
+                </div>
+
+                <!-- Coluna para Cargo -->
+                <div class="col-md-6 mb-3">
+                    <h4 class="fw-bold">Cargo:</h4>
+                    <p class="fs-5" id="position"></p>
+                </div>
+
+                <!-- Coluna para Departamento -->
+                <div class="col-md-6 mb-3">
+                    <h4 class="fw-bold">Departamento:</h4>
+                    <p class="fs-5" id="department"></p>
+                </div>
+
+                <!-- Coluna para Email -->
+                <div class="col-md-6 mb-3">
+                    <h4 class="fw-bold">Email:</h4>
+                    <p class="fs-5" id="email"></p>
+                </div>
+
+            </div>
+
+            <!-- Botão para editar ou mais ações -->
+            <div class="text-center">
+                <a href="#" class="btn btn-primary btn-lg">Editar Perfil</a>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer"></div>
+
+    <script src="../js/navBar.js"></script>
+    <script src="../js/user/userProfile.js"></script>
+    <script src="../js/footer.js"></script>
 </body>
 
 </html>

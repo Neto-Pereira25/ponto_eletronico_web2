@@ -48,6 +48,10 @@ document.getElementById('login').addEventListener('submit', function (event) {
         .then(data => {
             sessionStorage.setItem('employeeList', JSON.stringify(data));
         })
-        .catch();
+        .catch(error => {
+            console.error('Error ao buscar lista de funcionários:', error);
+            const msg = 'Error ao buscar lista de funcionários';
+            sessionStorage.setItem('msg', JSON.stringify(msg));
+        });
 
 });

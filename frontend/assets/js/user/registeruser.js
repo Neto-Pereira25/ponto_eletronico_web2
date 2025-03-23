@@ -13,7 +13,6 @@ document.getElementById('registeruser').addEventListener('submit', function (eve
         return;
     }
 
-
     fetch('http://localhost:8080/employee/registeruser', {
         method: 'POST',
         headers: {
@@ -36,14 +35,18 @@ document.getElementById('registeruser').addEventListener('submit', function (eve
             }
         })
         .then(data => {
-            const email = data.email;
-            const user = { email };
-            sessionStorage.setItem('user', JSON.stringify(user));
+            const msg = 'Usuário cadastrado com sucesso';
+            // const email = data.email;
+            // const user = { email };
+            // sessionStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('msg', JSON.stringify(msg));
 
-            window.location.href = '/frontend/assets/pages/home.html'
+            window.location.href = '/frontend/index.html';
         })
         .catch(error => {
             console.error('Error ao cadastrar:', error);
+            const msg = 'Error ao cadastrar o usuário';
+            sessionStorage.setItem('msg', JSON.stringify(msg));
         });
 
 });

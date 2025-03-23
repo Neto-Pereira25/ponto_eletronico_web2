@@ -1,4 +1,4 @@
-const navBar = `
+const navBarLogin = `
 <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="#">CheckPoint</a>
@@ -36,7 +36,7 @@ const navBar = `
                         </li>
                     </ul>
                     <div class="d-flex flex-row flex-md-row-reverse">
-                        <a class="btn btn-danger justify-content-center align-item-center" href="/logout">
+                        <a class="btn btn-danger justify-content-center align-item-center" href="/frontend/index.html" id="logout">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -50,7 +50,20 @@ const navBar = `
         </nav>
 `;
 
+const navBarLogout = `
+<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="#">CheckPoint</a>
+            </div>
+        </nav>
+`;
 const navContainer = document.querySelector('.navBar');
 
-navContainer.innerHTML = navBar;
+if (sessionStorage.getItem("user")) { // usuário logado
+    navContainer.innerHTML = navBarLogin;
+} else { // usuário deslogado
+    navContainer.innerHTML = navBarLogout;
+}
+
+
 

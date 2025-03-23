@@ -3,9 +3,11 @@ package br.edu.ifpe.discente.joseneto.pontoEletronico.controllers.employee;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +31,12 @@ import br.edu.ifpe.discente.joseneto.pontoEletronico.model.repositories.Employee
 public class EmployeeController {
 
     EmployeeRepository employeeRepository = new EmployeeRepository();
+    private final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @PostMapping
     public ResponseEntity<Employee> insert(@RequestBody Employee emp) {
         try {
+            emp.setPassword(PASSWORD_ENCODER.encode(emp.getPassword()));
             emp = employeeRepository.create(emp);
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Falha ao cadastrar funcionário");
@@ -106,6 +110,7 @@ public class EmployeeController {
         try {
             emp.setPosition("Porteiro");
             emp.setDepartment("Portaria");
+            emp.setPassword(PASSWORD_ENCODER.encode(emp.getPassword()));
             emp = employeeRepository.create(emp);
 
             URI uri = ServletUriComponentsBuilder
@@ -118,6 +123,35 @@ public class EmployeeController {
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "Falha ao registrar usuário");
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Employee> login(@RequestBody Map<String, String> loginData) {
+
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+
+        if (email.isEmpty() || password.isEmpty() || email == null || password == null) {
+            return new ResponseEntity<Employee>(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            Employee emp = employeeRepository.findByEmail(email);
+
+            if (emp == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            if (!PASSWORD_ENCODER.matches(password, emp.getPassword())) {
+                return new ResponseEntity<Employee>(HttpStatus.BAD_REQUEST);
+            }
+
+            return ResponseEntity.ok().body(emp);
+
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Falha ao fazer o login");
         }
     }
 }

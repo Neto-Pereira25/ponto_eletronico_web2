@@ -57,6 +57,7 @@ public class EmployeeController {
             if (employeeRepository.find(id) == null) {
                 return ResponseEntity.notFound().build();
             }
+            emp.setPassword(PASSWORD_ENCODER.encode(emp.getPassword()));
             emp.setId(id);
             employeeRepository.update(emp);
 

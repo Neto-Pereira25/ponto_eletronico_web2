@@ -3,8 +3,6 @@ document.getElementById('registeruser').addEventListener('submit', function (eve
 
     const name = document.getElementById('floatingRegisterName').value;
     const email = document.getElementById('floatingRegisterEmail').value;
-    // const position = document.getElementById('floatingRegisterPosition').value;
-    // const department = document.getElementById('floatingRegisterDepartment').value;
     const password = document.getElementById('floatingRegisterPassword').value;
     const repeatPassword = document.getElementById('floatingRegisterRepeatPassword').value;
 
@@ -22,8 +20,6 @@ document.getElementById('registeruser').addEventListener('submit', function (eve
         body: JSON.stringify({
             name,
             email,
-            // position,
-            // department,
             password
         })
     })
@@ -36,9 +32,6 @@ document.getElementById('registeruser').addEventListener('submit', function (eve
         })
         .then(data => {
             const msg = 'Usuário cadastrado com sucesso';
-            // const email = data.email;
-            // const user = { email };
-            // sessionStorage.setItem('user', JSON.stringify(user));
             sessionStorage.setItem('msg', JSON.stringify(msg));
 
             window.location.href = '/frontend/index.html';

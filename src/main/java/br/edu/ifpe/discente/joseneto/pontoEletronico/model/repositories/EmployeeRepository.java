@@ -72,8 +72,6 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
 
             pstm.executeUpdate();
 
-            System.out.println("\n" + emp + "\n");
-
             return emp;
         } catch (SQLException e) {
             throw new DBException(e.getMessage());

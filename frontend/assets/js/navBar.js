@@ -1,7 +1,7 @@
 const navBarLogin = `
 <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="#">CheckPoint</a>
+                <a class="navbar-brand text-white" href="/frontend/index.html">CheckPoint</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -15,13 +15,13 @@ const navBarLogin = `
                                 Funcionários
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Adicionar Funcionário</a></li>
-                                <li><a class="dropdown-item" href="#">Pesquisar Funcionário</a>
+                                <li><a class="dropdown-item" href="/frontend/assets/pages/insertEmployee.html">Adicionar Funcionário</a></li>
+                                <li><a class="dropdown-item" href="/frontend/assets/pages/findEmployees.html">Pesquisar Funcionário</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Lista de Funcionários</a></li>
+                                <li><a class="dropdown-item" href="/frontend/assets/pages/employees.html">Lista de Funcionários</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -30,8 +30,8 @@ const navBarLogin = `
                                 Perfil
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
-                                <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                                <li><a class="dropdown-item" href="/frontend/assets/pages/userProfile.html">Ver Perfil</a></li>
+                                <li><a class="dropdown-item" href="/frontend/assets/pages/updateUser.html">Editar Perfil</a></li>
                             </ul>
                         </li>
                     </ul>

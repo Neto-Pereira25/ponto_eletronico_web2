@@ -86,6 +86,46 @@ tbody.addEventListener('click', function (event) {
             window.location.href = '/frontend/assets/pages/updateEmployee.html';
         } else if (action === 'delete') {
             sessionStorage.setItem('deleteId', id);
+            fetch(`http://localhost:8080/employee/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (response.status === 204) {
+                        return;
+                    }
+                })
+                .then(async () => {
+                    await fetch('http://localhost:8080/employee', {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                        .then(response => {
+                            if (response.status === 200) {
+                                return response.json();
+                            }
+                        })
+                        .then(data => {
+                            sessionStorage.setItem('employeeList', JSON.stringify(data));
+                            window.location.href = '/frontend/assets/pages/employees.html';
+                        })
+                        .catch(error => {
+                            console.error('Error ao buscar lista de funcionários:', error);
+                            const msg = 'Error ao buscar lista de funcionários';
+                            sessionStorage.setItem('msg', JSON.stringify(msg));
+                        });
+                })
+                .catch(error => {
+                    console.error('Erro ao deletar funcionário:', error);
+                    const msg = 'Erro ao deletar funcionário';
+                    sessionStorage.setItem('msg', JSON.stringify(msg));
+                });
         } else if (action === 'clockIn') {
             sessionStorage.setItem('clockInId', id);
         } else if (action === 'viewRecords') {

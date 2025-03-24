@@ -152,6 +152,7 @@ tbody.addEventListener('click', function (event) {
                 });
         } else if (action === 'viewRecords') {
             sessionStorage.setItem('viewRecordsId', id);
+            window.location.href = '/frontend/assets/pages/timeRegister.html';
         }
     }
 });

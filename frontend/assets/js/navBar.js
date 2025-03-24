@@ -16,7 +16,7 @@ const navBarLogin = `
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/frontend/assets/pages/insertEmployee.html">Adicionar Funcionário</a></li>
-                                <li><a class="dropdown-item" href="/frontend/assets/pages/findEmployees.html">Pesquisar Funcionário</a>
+                                <!-- <li><a class="dropdown-item" href="/frontend/assets/pages/findEmployees.html">Pesquisar Funcionário</a> -->
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">

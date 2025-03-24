@@ -85,7 +85,6 @@ tbody.addEventListener('click', function (event) {
             sessionStorage.setItem('editId', id);
             window.location.href = '/frontend/assets/pages/updateEmployee.html';
         } else if (action === 'delete') {
-            sessionStorage.setItem('deleteId', id);
             fetch(`http://localhost:8080/employee/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -127,7 +126,30 @@ tbody.addEventListener('click', function (event) {
                     sessionStorage.setItem('msg', JSON.stringify(msg));
                 });
         } else if (action === 'clockIn') {
-            sessionStorage.setItem('clockInId', id);
+            fetch('http://localhost:8080/timeregister', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    employeeId: id,
+                    dateTime: new Date()
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Erro ao registrar ponto do funcionario:', error);
+                    const msg = 'Erro ao registrar ponto do funcionario';
+                    sessionStorage.setItem('msg', JSON.stringify(msg));
+                });
         } else if (action === 'viewRecords') {
             sessionStorage.setItem('viewRecordsId', id);
         }
